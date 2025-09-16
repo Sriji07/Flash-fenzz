@@ -6,6 +6,11 @@ A **multiplayer flashcard quiz game** built with **Next.js 15**, **Supabase (Pos
 
 Players can create or join matches, answer questions in real-time, and compete on the leaderboard.
 
+## 🌐 Live Server
+
+[flash-fenzz-5a3un5evg-sriji07s-projects.vercel.app](https://flash-fenzz-5a3un5evg-sriji07s-projects.vercel.app)
+
+
 
 
 ---
