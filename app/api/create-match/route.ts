@@ -5,7 +5,7 @@ export async function POST(req: Request) {
         const { userId } = await req.json();
         console.log("📩 create-match called by user:", userId);
 
-        // 1. Create match
+        // 1. Create the match
         const { data: match, error: matchError } = await supabaseServer
             .from("matches")
             .insert([{ created_by: userId, status: "waiting" }])
@@ -13,34 +13,35 @@ export async function POST(req: Request) {
             .single();
 
         if (matchError || !match) {
+            console.error("❌ Error creating match:", matchError?.message);
             return Response.json(
                 { error: matchError?.message || "Could not create match" },
                 { status: 400 }
             );
         }
 
-        // 2. Auto-add creator to match_players
+        // 2. Insert creator into match_players
         await supabaseServer
             .from("match_players")
             .insert([{ match_id: match.id, user_id: userId, score: 0 }]);
 
-        // 3. Pick 10 random questions from your Supabase `questions` table
-        const { data: randomQuestions, error: fetchError } = await supabaseServer
-            .from("questions")
-            .select("*")
-            .order("RANDOM()") // Postgres way
-            .limit(10);
+        // 3. Fetch 10 random questions from Supabase function
+        const { data: randomQuestions, error: fetchError } = await supabaseServer.rpc(
+            "random_questions",
+            { limit_count: 10 }
+        );
 
         if (fetchError || !randomQuestions) {
+            console.error("❌ Error fetching random questions:", fetchError?.message);
             return Response.json(
-                { error: fetchError?.message || "No questions found" },
+                { error: fetchError?.message || "Could not fetch questions" },
                 { status: 400 }
             );
         }
 
         // 4. Insert them into match_questions
         await supabaseServer.from("match_questions").insert(
-            randomQuestions.map((q) => ({
+            randomQuestions.map((q: { id: any; text: any; correct_answer: any; }) => ({
                 match_id: match.id,
                 question_id: q.id,
                 text: q.text,
@@ -48,7 +49,7 @@ export async function POST(req: Request) {
             }))
         );
 
-        // 5. Mark match as ready
+        // 5. Update match status to in_progress
         await supabaseServer
             .from("matches")
             .update({ status: "in_progress" })
