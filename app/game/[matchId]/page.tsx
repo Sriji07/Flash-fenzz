@@ -4,12 +4,8 @@ import { use } from "react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-export default function GamePage({
-    params,
-}: {
-    params: Promise<{ matchId: string }>;
-}) {
-    const { matchId } = use(params);
+export default function GamePage({ params }: any) {
+    const { matchId } = params;
 
     const [questions, setQuestions] = useState<any[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);

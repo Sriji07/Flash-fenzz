@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-export default function ReviewPage({ params }: { params: { matchId: string } }) {
-    const { matchId } = params;
+export default function GamePage({ params }: any) {
+    const { matchId } = use(params);
     const [match, setMatch] = useState<any>(null);
 
     useEffect(() => {
@@ -41,3 +41,7 @@ export default function ReviewPage({ params }: { params: { matchId: string } }) 
         </div>
     );
 }
+function use(params: any): { matchId: any; } {
+    throw new Error("Function not implemented.");
+}
+
