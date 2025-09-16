@@ -113,7 +113,7 @@ userId: string,
 highestPoints: number
 
 }
-
+```
 
 
 ⚡ Setup Guide
@@ -155,6 +155,7 @@ Supabase SQL
 Run these in Supabase SQL Editor:
 
 -- Matches
+```sql
 
 create table matches (
 
@@ -217,70 +218,74 @@ returns setof questions as $$
 select * from questions order by random() limit limit_count;
 
 $$ language sql;
+```
 
 
+## ▶️ Run Locally
 
-▶️ Run Locally
-
+```bash
 npm run dev
+```
 
-Visit →
-
-
-
-☁️ Deploy to Vercel
-
-Push code to GitHub
-
-Import repo in
-
-Add Environment Variables (NEXT_PUBLIC_SUPABASE_URL, MONGODB_URI, etc.)
-
-Set build command:
-
-next build --no-lint
-
-Deploy 🎉
-
-
-
-🔗 API Endpoints
-
-Create Match
-
-POST /api/create-match
-
-Body: { "userId": "<uuid>" }
-
-Join Match
-
-POST /api/join-match
-
-Body: { "matchId": "<uuid>", "userId": "<uuid>" }
-
-Submit Answer
-
-POST /api/submit-answer
-
-Body: { "matchId": "<uuid>", "questionId": "<uuid>", "userId": "<uuid>", "answer": "foo" }
-
-End Match
-
-POST /api/end-match
-
-Body: { "matchId": "<uuid>" }
-
-Leaderboard
-
-GET /api/leaderboard
-
-
-
-📜 License
-
-MIT License © 2025
-
+Visit → [http://localhost:3000](http://localhost:3000)
 
 
 ---
+
+## ☁️ Deploy to Vercel
+
+1. Push code to GitHub  
+2. Import repo in Vercel  
+3. Add Environment Variables (`NEXT_PUBLIC_SUPABASE_URL`, `MONGODB_URI`, etc.)  
+4. Set build command:  
+
+```bash
+next build --no-lint
+```
+
+5. Deploy 🎉
+
+
+---
+
+## 🔗 API Endpoints
+
+### Create Match
+**POST** `/api/create-match`  
+Body:  
+```json
+{ "userId": "<uuid>" }
+```
+
+### Join Match
+**POST** `/api/join-match`  
+Body:  
+```json
+{ "matchId": "<uuid>", "userId": "<uuid>" }
+```
+
+### Submit Answer
+**POST** `/api/submit-answer`  
+Body:  
+```json
+{ "matchId": "<uuid>", "questionId": "<uuid>", "userId": "<uuid>", "answer": "foo" }
+```
+
+### End Match
+**POST** `/api/end-match`  
+Body:  
+```json
+{ "matchId": "<uuid>" }
+```
+
+### Leaderboard
+**GET** `/api/leaderboard`  
+
+
+---
+
+## 📜 License
+
+MIT License © 2025
+
 
